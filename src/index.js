@@ -23,6 +23,13 @@ class Board extends React.Component {
 	handleClick(i) {
 		// kind of clone the squares array
 		const squares = this.state.squares.slice();
+
+		// check if the square has already been checked
+		// or if there is a winner already
+		if (calculateWinner(squares) || squares[i]) {
+			return;
+		}
+
 		// change state of spacific square X or O depending on whose turn it is
 		squares[i] = this.state.xIsNext ? 'X' : 'O';
 		// apply the state changes
@@ -36,7 +43,16 @@ class Board extends React.Component {
 		return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
 	}
 	render() {
-		const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+		const winner = calculateWinner(this.state.squares);
+
+		let status;
+
+		if (winner) {
+			status = 'Winner: ' + winner;
+		} else {
+			status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+		}
+
 		return (
 			<div>
 				<div className="status">{status}</div>
