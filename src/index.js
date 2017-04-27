@@ -29,11 +29,15 @@ class Board extends React.Component {
 	}
 
 	handleClick(i) {
-		console.log("clicked " + i);
+		// kind of clone the squares array
+		const squares = this.state.squares.slice();
+		// change state of spacific square
+		squares[i] = 'X';
+		// apply the state changes
+		this.setState({squares: squares});
 	}
 
 	renderSquare(i) {
-		//return <Square value={this.state.squares[i]} />;
 		return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
 	}
 	render() {
